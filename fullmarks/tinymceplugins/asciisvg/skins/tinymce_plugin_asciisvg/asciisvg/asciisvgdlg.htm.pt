@@ -88,7 +88,8 @@ Graphs: <select id="graphs" onchange="AsciisvgDialog.loadeqn()"></select>
 </select>
 
 <hr/>
-<div id="preview"><embed id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" sscr="-7.5,7.5,-5,5,1,1,1,1,1,300,200" /></div>
+<div id="preview"><embed class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script="width=300; height=200; xmin=-7.5; xmax=7.5; xscl=1;
+axes(); plot(sin(x));" sscr="-7.5,7.5,-5,5,1,1,1,1,1,300,200" /></div>
 
 	
 	<div class="mceActionPanel">
