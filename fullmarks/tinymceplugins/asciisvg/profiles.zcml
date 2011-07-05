@@ -5,9 +5,9 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="ASCIISVG plugin for TinyMCE"
+        title="TinyMCE ASCIISVG plugin"
         directory="profiles/default"
-        description='ASCIISVG plugin for TinyMCE'
+        description='TinyMCE ASCIISVG plugin'
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
