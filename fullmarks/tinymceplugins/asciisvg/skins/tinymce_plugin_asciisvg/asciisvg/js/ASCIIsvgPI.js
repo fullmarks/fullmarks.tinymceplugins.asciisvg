@@ -1201,23 +1201,9 @@ function parseShortScript(sscript,gw,gh) {
 
 function drawPics() {
   var index, nd;
+
   pictures = document.getElementsByTagName("embed");
- // might be needed if setTimeout on parseShortScript isn't working
-  if (!ASnoSVG) {
-	   try {
-		  for (var i = 0; i < pictures.length; i++) {
-			  if (pictures[i].getAttribute("sscr")!='' || pictures[i].getAttribute("script")!='') {
-				  if (pictures[i].getSVGDocument().getElementById("root") == null) {
-					setTimeout(drawPics,100);
-					return;
-				  }
-			  }
-		  }
-	  } catch (e) {
-		  setTimeout(drawPics,100);
-		  return;
-	  }
- }
+  
   var len = pictures.length;
   
   
