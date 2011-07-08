@@ -18,6 +18,8 @@ var AsciisvgDialog = {
 		this.alignm = tinyMCEPopup.getWindowArg('alignm');
 		
         document.getElementById("previewsvg").setAttribute("script",this.script);
+        document.getElementById("previewsvg").value = this.script;
+        updatePicture('previewsvg');
 			
 		this.initscript(this.script);
 		
@@ -32,7 +34,9 @@ var AsciisvgDialog = {
 			} else {
 				aligntxt = "vertical-align: "+this.alignm+"; float: none;";
 			}
-			tinyMCEPopup.editor.execCommand('mceInsertContent', false, '<embed class="ASCIIsvg" style="width:300px; height: 200px; '+aligntxt+'" script="' + this.script + '" />');
+			tinyMCEPopup.editor.execCommand('mceInsertContent', false, '<div class="ASCIIsvg" style="width:300px; height: 200px;"/>');
+			el = tinyMCEPopup.editor.selection.getNode();
+			ed.dom.setAttrib(el, "script", this.script);
 		} else {
 			el = tinyMCEPopup.editor.selection.getNode();
 			ed.dom.setAttrib(el,"script",this.script);
