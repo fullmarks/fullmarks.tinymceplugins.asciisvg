@@ -88,7 +88,7 @@ Graphs: <select id="graphs" onchange="AsciisvgDialog.loadeqn()"></select>
 </select>
 
 <hr/>
-<div id="preview"><embed class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script=""/><textarea style="display: none" id="previewsvginput"></textarea></div>
+<div id="preview"><div class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script=""/><textarea style="display: none" id="previewsvginput"></textarea></div>
 	
 	<div class="mceActionPanel">
 		<div style="float: left">
