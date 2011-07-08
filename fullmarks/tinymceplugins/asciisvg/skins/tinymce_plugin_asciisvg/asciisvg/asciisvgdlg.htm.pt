@@ -59,19 +59,19 @@ End with: <Select id="gend">
 </div>
 <HR>
 
-xmin: <input type="text" id="xmin" size="4" value="-7.5" onChange='AsciisvgDialog.graphit()'/>
-xmax: <input type="text" id="xmax" size="4" value="7.5" onChange='AsciisvgDialog.graphit()'/>
-xscl: <input type="text" id="xscl" size="3" value="1" onChange='AsciisvgDialog.graphit()'/>
+xmin: <input type="text" id="graph-xmin" size="4" value="-7.5" onChange='AsciisvgDialog.graphit()'/>
+xmax: <input type="text" id="graph-xmax" size="4" value="7.5" onChange='AsciisvgDialog.graphit()'/>
+xscl: <input type="text" id="graph-xscl" size="3" value="1" onChange='AsciisvgDialog.graphit()'/>
 &nbsp;&nbsp;
-ymin: <input type="text" id="ymin" size="4" value="-5" onChange='AsciisvgDialog.graphit()'/>
-ymax: <input type="text" id="ymax" size="4" value="5" onChange='AsciisvgDialog.graphit()'/>
-yscl: <input type="text" id="yscl" size="3" value="1" onChange='AsciisvgDialog.graphit()'/>
+ymin: <input type="text" id="graph-ymin" size="4" value="-5" onChange='AsciisvgDialog.graphit()'/>
+ymax: <input type="text" id="graph-ymax" size="4" value="5" onChange='AsciisvgDialog.graphit()'/>
+yscl: <input type="text" id="graph-yscl" size="3" value="1" onChange='AsciisvgDialog.graphit()'/>
 <HR>
 
 Show axis labels: <input type="checkbox" id="labels" value="Show Labels" onClick='AsciisvgDialog.graphit()' CHECKED/>
 Show XY grid: <input type="checkbox" id="grid" value="Show Grid" onClick='AsciisvgDialog.graphit()' CHECKED/>
 &nbsp;&nbsp;
-Resize to: <input type="text" id="gwidth" size="5" value="300"/> by <input type="text" id="gheight" size="5" value="200"/>
+Resize to: <input type="text" id="graph-width" size="5" value="300"/> by <input type="text" id="graph-height" size="5" value="200"/>
 <input type="button" value="Update" onclick="AsciisvgDialog.graphit()"/>
 <HR>
 
@@ -88,9 +88,7 @@ Graphs: <select id="graphs" onchange="AsciisvgDialog.loadeqn()"></select>
 </select>
 
 <hr/>
-<div id="preview"><embed class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script="width=300; height=200; xmin=-7.5; xmax=7.5; xscl=1;
-axes(); plot(sin(x));" sscr="-7.5,7.5,-5,5,1,1,1,1,1,300,200" /></div>
-
+<div id="preview"><embed class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script=""/><textarea style="display: none" id="previewsvginput"></textarea></div>
 	
 	<div class="mceActionPanel">
 		<div style="float: left">

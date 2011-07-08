@@ -30,8 +30,8 @@
 			ed.addCommand('mceAsciisvg', function() {
 				el = ed.selection.getNode();
 				
-				if (el.nodeName == 'IMG' && ed.dom.getAttrib(el,"sscr")!='') {
-					sscr = ed.dom.getAttrib(el,"sscr");
+				if (el.nodeName == 'IMG' && ed.dom.getAttrib(el,"script")!='') {
+					script = ed.dom.getAttrib(el,"script");
 					isnew = false;
 					elwidth = parseInt(ed.dom.getStyle(el,"width"));
 					elheight = parseInt(ed.dom.getStyle(el,"height"));
@@ -41,7 +41,7 @@
 					}
 				} else {
 					isnew = true;
-					sscr = "-7.5,7.5,-5,5,1,1,1,1,1,300,200";
+					script = "width=300; height=200; xmin=-7.5; xmax=7.5; xscl=1; axes();";
 					elwidth = 300;
 					elheight = 200;
 					alignm = "middle";
@@ -55,11 +55,10 @@
 				}, {
 					plugin_url : url, // Plugin absolute URL
 					isnew : isnew, // Custom argument
-					sscr : sscr,
+					script : script,
 					width : elwidth,
 					height : elheight,
 					alignm : alignm, 
-					AScgiloc : ed.getParam('AScgiloc')
 				});
 			});
 

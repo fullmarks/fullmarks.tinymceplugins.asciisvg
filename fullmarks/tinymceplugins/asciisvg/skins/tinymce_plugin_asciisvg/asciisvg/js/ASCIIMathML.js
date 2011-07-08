@@ -2264,6 +2264,7 @@ function drawPictures() { // main routine; called after webpage has loaded
    initialized = false;
    picture = pictures[index-lastSlot];  // current picture object
    src = picture.getAttribute("script"); // get the ASCIIsvg code
+   console.log("src: " + src);
    if (src==null) src = "";
    // insert "axes()" if not present  ******** experimental
    if (!/axes\b|initPicture/.test(src)) {
@@ -2370,6 +2371,7 @@ function updatePicture(obj) {
   var node, src, id, top, left;
   if (typeof obj=="object") id = obj.id.slice(0,-6);
   else id = (typeof obj=="string"?obj:"picture"+(obj+1));
+  console.log("id: " + id);
   src = document.getElementById(id+"input").value;
   xmin = null; xmax = null; ymin = null; ymax = null;
   xscl = null; xgrid = null; yscl = null; ygrid = null;
