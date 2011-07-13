@@ -30,10 +30,9 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.execCommand('mceInsertContent', false, '<div class="ASCIISvg"><span id="asciisvg" class="ASCIIsvg" style="width:300px; height: 200px;"/></div>');
-                el = ed.selection.getNode();
-                ed.dom.setAttrib(el, "script", val);
-                picture = el;
+                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript">' + val +'</span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
+                node = ed.selection.getNode();
+                picture = node.getElementsByClassName('ASCIISvgPicture')[0];
                 translateandeval(val);
 
             });
