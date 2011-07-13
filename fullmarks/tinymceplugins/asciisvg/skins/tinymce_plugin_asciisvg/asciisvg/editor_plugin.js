@@ -27,9 +27,21 @@
 			var t= this;
 
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceAsciisvg');
+
+            ed.addCommand('mceInsertASCIISvg', function(val) {
+
+                ed.execCommand('mceInsertContent', false, '<div class="ASCIISvg"><span id="asciisvg" class="ASCIIsvg" style="width:300px; height: 200px;"/></div>');
+                el = ed.selection.getNode();
+                ed.dom.setAttrib(el, "script", val);
+                picture = el;
+                translateandeval(val);
+
+            });
+
+
 			ed.addCommand('mceAsciisvg', function() {
 				el = ed.selection.getNode();
-				
+
 				if (el.nodeName == 'IMG' && ed.dom.getAttrib(el,"script")!='') {
 					script = ed.dom.getAttrib(el,"script");
 					isnew = false;
@@ -73,7 +85,6 @@
 			ed.onNodeChange.add(function(ed, cm, n) {
 				cm.setActive('asciisvg', n.nodeName == 'IMG' && ed.dom.getAttrib(n,"sscr")!='');
 			});
-			
 			
 			ed.onPostProcess.add(function(ed,o) {
 				if (o.get) {
