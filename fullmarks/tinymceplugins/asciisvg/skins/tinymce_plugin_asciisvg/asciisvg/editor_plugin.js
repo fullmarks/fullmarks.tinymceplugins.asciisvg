@@ -30,7 +30,7 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.selection.setContent('<div class="ASCIISvg" style="display: inline"><span class="ASCIISvgScript" style="display: none">' + val +'</span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
+                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript">' + val +'</span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
                 node = ed.selection.getNode();
                 picture = node.getElementsByClassName('ASCIISvgPicture')[0];
                 initialized = false;
