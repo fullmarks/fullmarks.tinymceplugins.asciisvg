@@ -81,6 +81,17 @@
 				image : url + '/img/ed_asciisvg.gif'
 			});
 
+            ed.onInit.add(function(ed) {
+                selected = ed.dom.select('span.ASCIISvgScript');
+                for (var i=0; i < selected.length; i++) {
+                    element = selected[i];
+                    script = element.innerHTML;
+                    picture = element.nextSibling;
+                    initialized = false;
+                    translateandeval(script);
+                }
+            });
+
 			// Add a node change handler, selects the button in the UI when a image is selected
 			ed.onNodeChange.add(function(ed, cm, n) {
 				cm.setActive('asciisvg', n.nodeName == 'IMG' && ed.dom.getAttrib(n,"sscr")!='');
