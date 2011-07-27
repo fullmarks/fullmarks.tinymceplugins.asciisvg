@@ -7,4 +7,11 @@
              expression=""
              id="asciisvg/js/ASCIIMathML.js"
              inline="False"/>
+ <javascript cacheable="True"
+             compression="none"
+             cookable="True"
+             enabled="True"
+             expression=""
+             id="asciisvg/js/asciisvg.js"
+             inline="False"/>
 </object>
