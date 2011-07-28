@@ -81,6 +81,7 @@
 				image : url + '/img/ed_asciisvg.gif'
 			});
 
+            // Convert script to svg onInit
             ed.onInit.add(function(ed) {
                 selected = ed.dom.select('span.ASCIISvgScript');
                 for (var i=0; i < selected.length; i++) {
@@ -92,19 +93,13 @@
                 }
             });
 
-			// Add a node change handler, selects the button in the UI when a image is selected
+            // Add a node change handler, selects the button in the UI
+            // when an svg image is selected
 			ed.onNodeChange.add(function(ed, cm, n) {
-				cm.setActive('asciisvg', n.nodeName == 'IMG' && ed.dom.getAttrib(n,"sscr")!='');
+				var p = ed.dom.getParent(n, 'div.ASCIISvg');
+				cm.setActive('asciisvg', p);
 			});
-			
-			ed.onEvent.add(function(ed,e) {
-				if (e.type=="mouseup") {
-					el = ed.selection.getNode();
-					if (el.nodeName == 'IMG' && ed.dom.getAttrib(el,"sscr")!='') {
-						setTimeout(function() { t.processresize(ed,el)},50);
-					}
-				}
-			});
+
 		},
 
 		/**
