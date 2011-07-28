@@ -90,14 +90,26 @@
                     picture = element.nextSibling;
                     initialized = false;
                     translateandeval(script);
-                }
+                };
             });
 
             // Add a node change handler, selects the button in the UI
             // when an svg image is selected
 			ed.onNodeChange.add(function(ed, cm, n) {
-				var p = ed.dom.getParent(n, 'div.ASCIISvg');
-				cm.setActive('asciisvg', p);
+                selected = ed.dom.select('svg.mceItemVisualAid');
+                for (var i=0; i < selected.length; i++) {
+                    svg = selected[i];
+                    svg.removeAttribute('class');
+                };
+				var svgcontainer = ed.dom.getParent(n, 'div.ASCIISvg');
+				cm.setActive('asciisvg', svgcontainer);
+                if (svgcontainer != null && svgcontainer.getElementsByClassName('mceItemVisualAid')) {
+                    svg = svgcontainer.childNodes[1];
+                    // not sure why ed.dom.addClass does not work
+                    // ed.dom.addClass(svg, 'mceItemVisualAid');
+                    svg.setAttribute('class', 'mceItemVisualAid');
+                    console.log(svg.attributes);
+                };
 			});
 
 		},
@@ -110,29 +122,14 @@
 		 */
 		getInfo : function() {
 			return {
-				longname : 'Asciisvg plugin',
-				author : 'David Lippman',
+				longname : 'ASCIISvg Plugin',
+				author : 'Roché Compaan',
 				authorurl : '',
 				infourl : '',
 				version : "1.0"
 			};
 		}, 
 		
-		processresize : function(ed,el) {
-			width = parseInt(el.getAttribute("width"));
-			height = parseInt(ed.dom.getAttrib(el,"height"));
-			if (width>0 && height>0) {
-				sscra = decodeURIComponent(el.getAttribute("sscr")).split(',');
-				sscra[9] = width;
-				sscra[10] = height;
-				sscr = sscra.join(',');
-				ed.dom.setAttrib(el,"sscr", sscr);
-				ed.dom.setAttrib(el,"src",ed.getParam('AScgiloc')+'?sscr='+encodeURIComponent(sscr));
-			
-				ed.dom.setStyle(el,"width",width+"px");
-				ed.dom.setStyle(el,"height",height+"px");
-			}
-		}
 	});
 
 	// Register plugin
