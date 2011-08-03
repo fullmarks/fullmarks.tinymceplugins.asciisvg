@@ -289,13 +289,21 @@ var AsciisvgDialog = {
             
     initscript : function(text) {
         alignment = "middle";
-        commands = text.split(";");
+        commands = text.split(";").reverse();
 
-        for (i=0; i < commands.length; i++) {
-            parts = commands[i].split('=');
+        graphs = document.getElementById("graphs");
+        graphs.length = 0;
+
+        while (commands) {
+            command = commands.pop()
+            if (command == null) break;
+
+            parts = command.split('=');
             cmd = parts[0].trim();
             value = parts[1];
             if (value) value.trim();
+
+            console.log(cmd)
 
             // axes command
             if (cmd.indexOf('axes') != -1) {
@@ -323,23 +331,42 @@ var AsciisvgDialog = {
                     }
                 }
             }
+
+            // stroke, strokewidth, strokedasharray command
+            else if (cmd == 'stroke' || cmd == 'strokewidth' || cmd == 'strokedasharray') {
+                // the stroke command signals a new graph so create a
+                // new option
+                if (cmd == 'stroke') {
+                    option = document.createElement('option');
+                    graphs.options[graphs.options.length] = option;
+                }
+                option = graphs.options[graphs.options.length-1];
+                option.value += cmd + "=" + value + "; ";
+                graphs.options[graphs.options.length] = option;
+            }
+
             // plot command
             else if (cmd.indexOf('plot') != -1) {
                 equation = cmd.slice(5, -1);
                 // get the first element and strip quotes
                 equation = equation.split(',')[0]
                 equation = equation.replace('"', '', 'g');
-                if (equation) {
-                    document.getElementById('equation').value = equation;
-                }
+                option = graphs.options[graphs.options.length-1];
+                option.text = equation;
+                option.value += cmd + "; ";
+                graphs.options[graphs.options.length-1] = option;
             }
 
             // slopefield command
             else if (cmd.indexOf('slopefield') != -1) {
+                var newopt = document.createElement('option');
                 equation = cmd.slice(5, -1);
                 if (equation) {
                     document.getElementById('equation').value = equation;
                 }
+                newopt.text = equation;
+                newopt.value = cmd;
+                graphs.options[graphs.options.length] = newopt;
             }
 
             // graph attributes
@@ -349,44 +376,9 @@ var AsciisvgDialog = {
                     node.value = value;
                 }
             }
+
         }
 
-        document.getElementById("graphs").length = 0;
-
-        /*
-        var inx = 11;
-        while (sa.length > inx+9) {
-            var newopt = document.createElement('option');
-            
-            if (sa[inx]== "func") {
-                newopt.text = 'y=' + sa[inx+1];
-            } else if (sa[inx] == "polar") {
-                newopt.text = 'r=' + sa[inx+1];
-            } else if (sa[inx] == "param") {
-                newopt.text = '[x,y]=[' + sa[inx+1] + ','+ sa[inx+2] + ']';
-            } else if (sa[inx] == "slope") {
-                newopt.text = 'dy/dx='+ sa[inx+1];
-            }
-            newopt.value = sa[inx]+','+sa[inx+1]+','+sa[inx+2]+','+sa[inx+3]+','+sa[inx+4]+','+sa[inx+5]+','+sa[inx+6]+','+sa[inx+7]+','+sa[inx+8]+','+sa[inx+9];
-            graphs = document.getElementById("graphs");
-            graphs.options[graphs.options.length] = newopt;
-            //document.getElementById("graphs").add(newopt);
-            inx += 10;
-        }
-        if (inx > 11) {
-            this.loadeqn();
-        }
-        
-        switch (alignment.toLowerCase()) {
-            case "text-top": document.getElementById("alignment").selectedIndex = 0; break;
-            case "middle": document.getElementById("alignment").selectedIndex = 1; break;
-            case "text-bottom": document.getElementById("alignment").selectedIndex = 2; break;
-            case "left": document.getElementById("alignment").selectedIndex = 3; break;
-            case "right": document.getElementById("alignment").selectedIndex = 4; break;
-            default: document.getElementById("alignment").selectedIndex = 0; break;
-        }
-        */
-        
         //this.graphit();
     },
     
