@@ -66,8 +66,8 @@
 				
 				ed.windowManager.open({
 					file : url + '/asciisvgdlg.htm',
-					width : 630 + parseInt(ed.getLang('asciisvg.delta_width', 0)),
-					height : 440 + parseInt(ed.getLang('asciisvg.delta_height', 0)),
+					width : 670 + parseInt(ed.getLang('asciisvg.delta_width', 0)),
+					height : 500 + parseInt(ed.getLang('asciisvg.delta_height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url, // Plugin absolute URL
