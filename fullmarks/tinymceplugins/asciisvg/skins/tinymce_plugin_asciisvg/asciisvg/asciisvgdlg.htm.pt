@@ -91,7 +91,7 @@ Graphs: <select id="graphs" onchange="AsciisvgDialog.loadeqn()"></select>
 
 <hr/>
 <textarea style="display: none" id="previewsvginput"></textarea>
-<div id="preview"><div class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script=""/></div>
+<div id="preview"><div class="ASCIIsvg" id="previewsvg" type="image/svg+xml" src="js/d.svg" style="width: 300px; height: 200px; vertical-align: middle; float: none;" script=""></div></div>
 	
 	<div class="mceActionPanel">
 		<div style="float: left">
