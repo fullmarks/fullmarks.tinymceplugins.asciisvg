@@ -79,22 +79,22 @@ var AsciisvgDialog = {
         m_gend = gend.options[gend.selectedIndex].value;
         endpts = m_gstart + m_gend;
 
-         m_color = document.getElementById("gcolor").value;
-         m_strokewidth = document.getElementById("strokewidth").value;
-         m_strokedash = document.getElementById("strokedash").value;
-         x_start = document.getElementById("xstart").value;
-         x_end = document.getElementById("xend").value;
+        m_color = document.getElementById("gcolor").value;
+        m_strokewidth = document.getElementById("strokewidth").value;
+        m_strokedash = document.getElementById("strokedash").value;
+        x_start = document.getElementById("xstart").value;
+        x_end = document.getElementById("xend").value;
 
-         commands += 'stroke="' + m_color + '"; ';
-         commands += 'strokewidth=' + m_strokewidth + '; ';
-         if (m_strokedash != "none") {
-            commands += 'strokedasharray=' + m_strokedash + '; ';
-         }
+        commands += 'stroke="' + m_color + '"; ';
+        commands += 'strokewidth=' + m_strokewidth + '; ';
+        if (m_strokedash != "none") {
+           commands += 'strokedasharray=' + m_strokedash + '; ';
+        }
 
-         if (type == "slope") {
-            commands += 'slopefield("' + eq1 + '",' + eq2 + ',' + m_gstart + ');'; 
-         } 
-         else {
+        if (type == "slope") {
+           commands += 'slopefield("' + eq1 + '",' + eq2 + ',' + m_gstart + ');'; 
+        } 
+        else {
             if (type == "func") {
                 eqn = '"' + eq1 + '"';
             } else if (type == "polar") {
