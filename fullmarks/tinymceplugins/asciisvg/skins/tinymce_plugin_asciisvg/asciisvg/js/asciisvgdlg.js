@@ -22,7 +22,6 @@ var AsciisvgDialog = {
         document.getElementById("previewsvginput").value = this.script;
         updatePicture('previewsvg');
             
-        console.log(this.script);
         this.initscript(this.script);
         
     },
@@ -302,8 +301,6 @@ var AsciisvgDialog = {
             cmd = parts[0].trim();
             value = parts[1];
             if (value) value.trim();
-
-            console.log(cmd)
 
             // axes command
             if (cmd.indexOf('axes') != -1) {
