@@ -42,14 +42,19 @@
 			ed.addCommand('mceAsciisvg', function() {
 				el = ed.selection.getNode();
 
-				if (el.nodeName == 'IMG' && ed.dom.getAttrib(el,"script")!='') {
-					script = ed.dom.getAttrib(el,"script");
+				var svgcontainer = ed.dom.getParent(el, 'div.ASCIISvg');
+				if (svgcontainer != null) {
+                    svgscript = svgcontainer.childNodes[0];
+                    svggraph = svgcontainer.childNodes[1];
+                    script = svgscript.innerHTML;
+                    // strip away comment tags
+                    script = script.slice(11, -5);
 					isnew = false;
-					elwidth = parseInt(ed.dom.getStyle(el,"width"));
-					elheight = parseInt(ed.dom.getStyle(el,"height"));
-					alignm = ed.dom.getStyle(el,"float");
+					elwidth = parseInt(ed.dom.getStyle(svggraph,"width"));
+					elheight = parseInt(ed.dom.getStyle(svggraph,"height"));
+					alignm = ed.dom.getStyle(svggraph, "float");
 					if (alignm == "none") {
-						alignm = ed.dom.getStyle(el,"vertical-align");
+						alignm = ed.dom.getStyle(el, "vertical-align");
 					}
 				} else {
 					isnew = true;
@@ -104,12 +109,14 @@
                     svg.removeAttribute('class');
                 };
 				var svgcontainer = ed.dom.getParent(n, 'div.ASCIISvg');
-				cm.setActive('asciisvg', svgcontainer);
+				cm.setActive('asciisvg', svgcontainer != null);
                 if (svgcontainer != null && svgcontainer.getElementsByClassName('mceItemVisualAid')) {
                     svg = svgcontainer.childNodes[1];
                     // not sure why ed.dom.addClass does not work
                     // ed.dom.addClass(svg, 'mceItemVisualAid');
-                    svg.setAttribute('class', 'mceItemVisualAid');
+                    if (svg != null) {
+                        svg.setAttribute('class', 'mceItemVisualAid');
+                    }
                 };
 			});
 
