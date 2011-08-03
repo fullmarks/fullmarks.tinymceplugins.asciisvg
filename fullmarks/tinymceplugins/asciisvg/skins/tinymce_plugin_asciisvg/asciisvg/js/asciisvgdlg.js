@@ -189,8 +189,7 @@ var AsciisvgDialog = {
         
         document.getElementById("previewsvg").setAttribute("script", this.script);
         document.getElementById("previewsvginput").value = this.script;
-        updatePicture('previewsvg');    
-
+        updatePicture('previewsvg');
     },
     
     changetype : function() {
