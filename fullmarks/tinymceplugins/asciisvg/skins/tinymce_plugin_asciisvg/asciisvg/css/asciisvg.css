@@ -4,3 +4,12 @@ div.ASCIISvg {
 span.ASCIISvgScript {
     display: none;
 }
+
+hr {
+    border: 1px solid black;
+    margin: 0.5em 0em;
+}
+
+#preview {
+    padding: 1em;
+}

@@ -6,9 +6,11 @@
 	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script type="text/javascript" src="js/ASCIIMathML.js"></script>
 	<script type="text/javascript" src="js/asciisvgdlg.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/asciisvg.css" />
 	</head>
 <body>
 
+<div id="content" class="dialog-wrapper">
 <form onsubmit="AsciisvgDialog.insert();return false;" action="#">
 	<div id="options">Equation type: <select id="eqntype" onchange="AsciisvgDialog.changetype()">
 <option value="func">y=f(x)</option>
@@ -101,6 +103,7 @@ Graphs: <select id="graphs" onchange="AsciisvgDialog.loadeqn()"></select>
 		</div>
 	</div>
 </form>
+</div>
 
 </body>
 </html>
