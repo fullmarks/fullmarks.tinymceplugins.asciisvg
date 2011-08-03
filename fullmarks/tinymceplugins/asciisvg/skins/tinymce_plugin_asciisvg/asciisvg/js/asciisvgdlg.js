@@ -22,6 +22,7 @@ var AsciisvgDialog = {
         document.getElementById("previewsvginput").value = this.script;
         updatePicture('previewsvg');
             
+        console.log(this.script);
         this.initscript(this.script);
         
     },
@@ -329,6 +330,9 @@ var AsciisvgDialog = {
             // plot command
             else if (cmd.indexOf('plot') != -1) {
                 equation = cmd.slice(5, -1);
+                // get the first element and strip quotes
+                equation = equation.split(',')[0]
+                equation = equation.replace('"', '', 'g');
                 if (equation) {
                     document.getElementById('equation').value = equation;
                 }
