@@ -39,19 +39,24 @@ var AsciisvgDialog = {
             tinyMCEPopup.editor.execCommand('mceInsertASCIISvg', this.script);
         }
         else {
-            el = tinyMCEPopup.editor.selection.getNode();
-            ed.dom.setAttrib(el,"script",this.script);
-            ed.dom.setAttrib(el,"width",this.width);
-            ed.dom.setAttrib(el,"height",this.height);
-            ed.dom.setStyle(el,"width",this.width + 'px');
-            ed.dom.setStyle(el,"height",this.height + 'px');
+            el = ed.selection.getNode();
+            svgcontainer = ed.dom.getParent(el, 'div.ASCIISvg');
+            svgscript = svgcontainer.childNodes[0];
+            svgscript.innerHTML = '<![CDATA[' + this.script +']]>'
+            picture = svgcontainer.childNodes[1];
+            initialized = false;
+            translateandeval(this.script);
+
+            ed.dom.setAttrib(picture,"script",this.script);
+            ed.dom.setAttrib(picture,"width",this.width);
+            ed.dom.setAttrib(picture,"height",this.height);
             if (this.alignm == "left" || this.alignm == "right") {
-                ed.dom.setStyle(el,"float",this.alignm);
-                ed.dom.setStyle(el,"vertical-align","middle");
+                ed.dom.setStyle(picture,"float",this.alignm);
+                ed.dom.setStyle(picture,"vertical-align","middle");
             }
             else {
-                ed.dom.setStyle(el,"float","none");
-                ed.dom.setStyle(el,"vertical-align",this.alignm);
+                ed.dom.setStyle(picture,"float","none");
+                ed.dom.setStyle(picture,"vertical-align",this.alignm);
             }
             
         }
