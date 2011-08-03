@@ -30,7 +30,7 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript">' + val +'</span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
+                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
                 node = ed.selection.getNode();
                 picture = node.getElementsByClassName('ASCIISvgPicture')[0];
                 initialized = false;
@@ -87,6 +87,8 @@
                 for (var i=0; i < selected.length; i++) {
                     element = selected[i];
                     script = element.innerHTML;
+                    // strip away comment tags
+                    script = script.slice(11, -5);
                     picture = element.nextSibling;
                     initialized = false;
                     translateandeval(script);
@@ -108,7 +110,6 @@
                     // not sure why ed.dom.addClass does not work
                     // ed.dom.addClass(svg, 'mceItemVisualAid');
                     svg.setAttribute('class', 'mceItemVisualAid');
-                    console.log(svg.attributes);
                 };
 			});
 
