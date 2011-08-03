@@ -47,16 +47,16 @@ Line: <Select id="strokedash">
 </select> 
 
 Start with: <Select id="gstart">
-	<option value="none">Nothing</option>
-	<option value="arrow">Arrow</option>
-	<option value="opendot">Open Dot</option>
-	<option value="dot">Dot</option>
+	<option value="">Nothing</option>
+	<option value="<-">Arrow</option>
+	<option value="o-">Open Dot</option>
+	<option value="*-">Dot</option>
 </select>
 End with: <Select id="gend">
-	<option value="none">Nothing</option>
-	<option value="arrow">Arrow</option>
-	<option value="opendot">Open Dot</option>
-	<option value="dot">Dot</option>
+	<option value="">Nothing</option>
+	<option value="->">Arrow</option>
+	<option value="-o">Open Dot</option>
+	<option value="-*">Dot</option>
 </select> 
 </div>
 <HR>

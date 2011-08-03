@@ -73,19 +73,11 @@ var AsciisvgDialog = {
         var eq1 = document.getElementById("equation").value;
         var eq2 = null;
     
-        m_gstart = document.getElementById("gstart").selectedIndex;
-        m_gend = document.getElementById("gend").selectedIndex;
-        endpts = ""
-        switch (m_gstart) {
-            case "arrow": endpts += "<-"; 
-            case "opendot": endpts += "o-"; 
-            case "dot": endpts += "*-"; 
-        }
-        switch (m_gend) {
-            case "arrow": endpts += "->"; 
-            case "opendot": endpts += "-o"; 
-            case "dot": endpts += "-*"; 
-        }
+        gstart = document.getElementById("gstart");
+        gend = document.getElementById("gend");
+        m_gstart = gstart.options[gstart.selectedIndex].value;
+        m_gend = gend.options[gend.selectedIndex].value;
+        endpts = m_gstart + m_gend;
 
          m_color = document.getElementById("gcolor").value;
          m_strokewidth = document.getElementById("strokewidth").value;
