@@ -256,16 +256,20 @@ var AsciisvgDialog = {
         
         var script = graphs.options[graphs.selectedIndex].value;
         
-        if (sa[0] == "func") {
+        eval(script.slice(script.indexOf('var eqntype'), -1));
+        console.log(eqntype);
+
+        if (eqntype == "func") {
             document.getElementById("eqntype").selectedIndex = 0;
-        } else if (sa[0] == "polar") {
+        } else if (eqntype == "polar") {
             document.getElementById("eqntype").selectedIndex = 1;
-        } else if (sa[0] == "param") {
+        } else if (eqntype == "param") {
             document.getElementById("eqntype").selectedIndex = 2;
-        } else if (sa[0] == "slope") {
+        } else if (eqntype == "slope") {
             document.getElementById("eqntype").selectedIndex = 3;
         } 
         this.changetype();
+        /*
         document.getElementById("equation").value = sa[1];
         if ((sa[0] == "param")||(sa[0] == "slope")) {
             document.getElementById("eqn2").value = sa[2];
@@ -292,6 +296,7 @@ var AsciisvgDialog = {
             case "7 3 2 3": document.getElementById("strokedash").selectedIndex = 4; break;
             default: document.getElementById("strokedash").selectedIndex = 0;
         }
+        */
     },
             
     initscript : function(text) {
