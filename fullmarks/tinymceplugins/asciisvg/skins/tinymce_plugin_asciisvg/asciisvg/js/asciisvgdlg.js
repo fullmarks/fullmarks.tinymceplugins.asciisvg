@@ -118,6 +118,8 @@ var AsciisvgDialog = {
             }
 
         }
+        commands += ' var eqnlabel="' + eqnlabel + '";';
+        commands += ' var eqntype="' + type + '";';
 
         newopt.value = commands;
         newopt.text = eqnlabel;
@@ -349,28 +351,26 @@ var AsciisvgDialog = {
                 graphs.options[graphs.options.length] = option;
             }
 
-            // plot command
-            else if (cmd.indexOf('plot') != -1) {
-                equation = cmd.slice(5, -1);
-                // get the first element and strip quotes
-                equation = equation.split(',')[0]
-                equation = equation.replace('"', '', 'g');
+            // plot & slopefield command
+            else if (cmd.indexOf('plot') != -1 || 
+                     cmd.indexOf('slopefield') != -1) {
                 option = graphs.options[graphs.options.length-1];
-                option.text = equation;
                 option.value += cmd + "; ";
                 graphs.options[graphs.options.length-1] = option;
             }
 
-            // slopefield command
-            else if (cmd.indexOf('slopefield') != -1) {
-                var newopt = document.createElement('option');
-                equation = cmd.slice(5, -1);
-                if (equation) {
-                    document.getElementById('equation').value = equation;
-                }
-                newopt.text = equation;
-                newopt.value = cmd;
-                graphs.options[graphs.options.length] = newopt;
+            // var eqnlabel
+            else if (cmd.indexOf('var eqnlabel') != -1) {
+                eqnlabel = command.slice(15,-1);
+                option = graphs.options[graphs.options.length-1];
+                option.value += command + "; ";
+                option.text = eqnlabel;
+            }
+
+            // var eqntype
+            else if (cmd.indexOf('var eqntype') != -1) {
+                option = graphs.options[graphs.options.length-1];
+                option.value += command + "; ";
             }
 
             // graph attributes
