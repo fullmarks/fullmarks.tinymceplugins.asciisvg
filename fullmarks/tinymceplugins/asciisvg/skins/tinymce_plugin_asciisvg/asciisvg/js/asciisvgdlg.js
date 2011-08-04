@@ -71,20 +71,20 @@ var AsciisvgDialog = {
     
         var type = document.getElementById("eqntype").value;
         var eq1 = document.getElementById("equation").value;
-        eqn2input = document.getElementById("eqn2");
+        var eqn2input = document.getElementById("eqn2");
         var eq2 = eqn2input && eqn2input.value || null;
     
-        gstart = document.getElementById("gstart");
-        gend = document.getElementById("gend");
-        m_gstart = gstart.options[gstart.selectedIndex].value;
-        m_gend = gend.options[gend.selectedIndex].value;
-        endpts = m_gstart + m_gend;
+        var gstart = document.getElementById("gstart");
+        var gend = document.getElementById("gend");
+        var m_gstart = gstart.options[gstart.selectedIndex].value;
+        var m_gend = gend.options[gend.selectedIndex].value;
+        var endpts = m_gstart + m_gend;
 
-        m_color = document.getElementById("gcolor").value;
-        m_strokewidth = document.getElementById("strokewidth").value;
-        m_strokedash = document.getElementById("strokedash").value;
-        x_start = document.getElementById("xstart").value;
-        x_end = document.getElementById("xend").value;
+        var m_color = document.getElementById("gcolor").value;
+        var m_strokewidth = document.getElementById("strokewidth").value;
+        var m_strokedash = document.getElementById("strokedash").value;
+        var x_start = document.getElementById("xstart").value;
+        var x_end = document.getElementById("xend").value;
 
         commands += 'stroke="' + m_color + '"; ';
         commands += 'strokewidth=' + m_strokewidth + '; ';
@@ -150,23 +150,22 @@ var AsciisvgDialog = {
     
     graphit : function() {
         ed = tinyMCEPopup.editor;
-        var commands;
-        commands = "";
+        var commands = "";
          
         initialized = false;
         
         //commands = 'setBorder(5);';
     
-        m_xmin = document.getElementById("graph-xmin").value;
-        m_xmax = document.getElementById("graph-xmax").value;
-        m_ymin = document.getElementById("graph-ymin").value;
-        m_ymax = document.getElementById("graph-ymax").value;
+        var m_xmin = document.getElementById("graph-xmin").value;
+        var m_xmax = document.getElementById("graph-xmax").value;
+        var m_ymin = document.getElementById("graph-ymin").value;
+        var m_ymax = document.getElementById("graph-ymax").value;
         if (m_ymin == "") m_ymin = null
         if (m_ymax == "") m_ymax = null
         commands += 'initPicture(' + m_xmin + ',' + m_xmax + ','+ m_ymin + ',' + m_ymax + '); ';
     
-        m_xscl = document.getElementById("graph-xscl").value;
-        m_yscl = document.getElementById("graph-yscl").value;
+        var m_xscl = document.getElementById("graph-xscl").value;
+        var m_yscl = document.getElementById("graph-yscl").value;
         if (m_xscl == "") m_xscl = null
         if (m_yscl == "") m_yscl = null
         if (document.getElementById("labels").checked) {
@@ -186,7 +185,7 @@ var AsciisvgDialog = {
         commands += 'height=' + document.getElementById("graph-height").value + '; ';
         
     
-        graphs = document.getElementById("graphs");
+        var graphs = document.getElementById("graphs");
         for (i=0; i < graphs.length; i++) {
             commands += graphs.options[i].value;
         }
@@ -253,7 +252,7 @@ var AsciisvgDialog = {
     },
     
     loadeqn : function() {
-        graphs = document.getElementById("graphs"); 
+        var graphs = document.getElementById("graphs"); 
         
         var script = graphs.options[graphs.selectedIndex].value;
         
@@ -296,10 +295,10 @@ var AsciisvgDialog = {
     },
             
     initscript : function(text) {
-        alignment = "middle";
-        commands = text.split(";").reverse();
+        var alignment = "middle";
+        var commands = text.split(";").reverse();
 
-        graphs = document.getElementById("graphs");
+        var graphs = document.getElementById("graphs");
         graphs.length = 0;
 
         while (commands) {
