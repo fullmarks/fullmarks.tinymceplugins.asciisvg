@@ -65,12 +65,14 @@ var AsciisvgDialog = {
     addgraph : function() {
         
         var commands = "";
+        var eqnlabel = "";
         var graphs = document.getElementById("graphs");
         var newopt = document.createElement('option');
     
         var type = document.getElementById("eqntype").value;
         var eq1 = document.getElementById("equation").value;
-        var eq2 = null;
+        eqn2input = document.getElementById("eqn2");
+        var eq2 = eqn2input && eqn2input.value || null;
     
         gstart = document.getElementById("gstart");
         gend = document.getElementById("gend");
@@ -91,15 +93,20 @@ var AsciisvgDialog = {
         }
 
         if (type == "slope") {
-           commands += 'slopefield("' + eq1 + '",' + eq2 + ',' + m_gstart + ');'; 
+           commands += 'slopefield("' + eq1 + '",' + eq2 + ',' + eq2 + ');'; 
+           eqnlabel = "dy/dx=" + eq1;
         } 
         else {
             if (type == "func") {
                 eqn = '"' + eq1 + '"';
+                eqnlabel = "y=" + eq1;
             } else if (type == "polar") {
-                eqn = '["cos(t)*(' + eq1 + ')","sin(t)*(' + eq2 + ')"]';
+                eqn = '["cos(t)*(' + eq1 + ')","sin(t)*(' + eq1 + ')"]';
+                eqnlabel = "r=" + eq1;
             } else if (type == "param") {
                 eqn = '["' + eq1 + '","'+ eq2 + '"]';
+                eqnlabel = "[x,y]=" + eqn;
+                eqnlabel = eqnlabel.replace('"','','g');
             }
 
             if (typeof eval(x_start) == "number" && typeof eval(x_end) == "number") {
@@ -113,7 +120,7 @@ var AsciisvgDialog = {
         }
 
         newopt.value = commands;
-        newopt.text = eq1;
+        newopt.text = eqnlabel;
         graphs.options[graphs.options.length] = newopt;
         graphs.selectedIndex = graphs.options.length - 1;
         this.graphit();
@@ -246,7 +253,7 @@ var AsciisvgDialog = {
     loadeqn : function() {
         graphs = document.getElementById("graphs"); 
         
-        var sa = graphs.options[graphs.selectedIndex].value.split(",");
+        var script = graphs.options[graphs.selectedIndex].value;
         
         if (sa[0] == "func") {
             document.getElementById("eqntype").selectedIndex = 0;
