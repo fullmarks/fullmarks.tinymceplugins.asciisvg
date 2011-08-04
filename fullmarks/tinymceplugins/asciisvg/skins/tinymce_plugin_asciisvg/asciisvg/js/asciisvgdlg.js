@@ -89,7 +89,7 @@ var AsciisvgDialog = {
         commands += 'stroke="' + m_color + '"; ';
         commands += 'strokewidth=' + m_strokewidth + '; ';
         if (m_strokedash != "none") {
-           commands += 'strokedasharray=' + m_strokedash + '; ';
+           commands += 'strokedasharray="' + m_strokedash + '"; ';
         }
 
         if (type == "slope") {
@@ -120,6 +120,8 @@ var AsciisvgDialog = {
         }
         commands += ' var eqnlabel="' + eqnlabel + '";';
         commands += ' var eqntype="' + type + '";';
+        commands += ' var eqn1="' + eq1 + '";';
+        commands += ' var eqn2="' + eq2 + '";';
 
         newopt.value = commands;
         newopt.text = eqnlabel;
@@ -253,11 +255,10 @@ var AsciisvgDialog = {
     
     loadeqn : function() {
         var graphs = document.getElementById("graphs"); 
-        
         var script = graphs.options[graphs.selectedIndex].value;
+        var commands = script.split(';');
         
-        eval(script.slice(script.indexOf('var eqntype'), -1));
-        console.log(eqntype);
+        eval(script.slice(script.indexOf('var eqnlabel'), -1));
 
         if (eqntype == "func") {
             document.getElementById("eqntype").selectedIndex = 0;
@@ -269,33 +270,70 @@ var AsciisvgDialog = {
             document.getElementById("eqntype").selectedIndex = 3;
         } 
         this.changetype();
-        /*
-        document.getElementById("equation").value = sa[1];
-        if ((sa[0] == "param")||(sa[0] == "slope")) {
-            document.getElementById("eqn2").value = sa[2];
+
+        document.getElementById("equation").value = eqn1;
+        if ((eqntype == "param")||(eqntype == "slope")) {
+            document.getElementById("eqn2").value = eqn2;
         }
     
-        document.getElementById("gstart").selectedIndex = sa[3];
-        document.getElementById("gend").selectedIndex = sa[4];
+        for (var i=0; i < commands.length; i++) {
+            var command = commands[i];
+            var parts = command.split('=');
+            var cmd = parts[0].trim();
+            var value = parts[1];
+            if (value) {
+                value = value.trim();
+                value = value.replace('"', '', 'g');
+            }
+
+            if (cmd == "stroke") {
+                switch (value) {
+                    case "black": document.getElementById("gcolor").selectedIndex = 0; break;
+                    case "red": document.getElementById("gcolor").selectedIndex = 1; break;
+                    case "orange": document.getElementById("gcolor").selectedIndex = 2; break;
+                    case "yellow": document.getElementById("gcolor").selectedIndex = 3; break;
+                    case "green": document.getElementById("gcolor").selectedIndex = 4; break;
+                    case "blue": document.getElementById("gcolor").selectedIndex = 5; break;
+                    case "purple": document.getElementById("gcolor").selectedIndex = 6; break;
+                }
+            }
+            else if (cmd == "strokewidth") {
+                document.getElementById("strokewidth").selectedIndex = parseInt(value) - 1;
+            }
+            else if (cmd == "strokedasharray") {
+                switch (value) {
+                    case "2": document.getElementById("strokedash").selectedIndex = 1; break;
+                    case "5": document.getElementById("strokedash").selectedIndex = 2; break;
+                    case "5 2": document.getElementById("strokedash").selectedIndex = 3; break;
+                    case "7 3 2 3": document.getElementById("strokedash").selectedIndex = 4; break;
+                    default: document.getElementById("strokedash").selectedIndex = 0;
+                }
+            }
+            else if (cmd.indexOf("plot") != -1) {
+                var plotargs = cmd.replace('"', '', 'g');
+                plotargs = plotargs.replace(')', '', 'g');
+                plotargs = plotargs.split(',');
+                var arrowstart = plotargs.slice(-1).slice(0,1);
+                var arrowend = plotargs.slice(-1).slice(-2,-1);
+                console.log(arrowstart);
+                console.log(arrowend);
+                var gstart = document.getElementById("gstart");
+                for (var i=0; i < gstart.options.length; i++) {
+                    if (gstart.options[i].value == arrowstart) {
+                        gstart.selectedIndex = i;
+                    }
+                }
+                var gend = document.getElementById("gend");
+                for (var i=0; i < gend.options.length; i++) {
+                    if (gend.options[i].value == arrowend) {
+                        gend.selectedIndex = i;
+                    }
+                }
+            }
+        }
+        /*
         document.getElementById("xstart").value = sa[5];
         document.getElementById("xend").value = sa[6];
-        switch (sa[7]) {
-            case "black": document.getElementById("gcolor").selectedIndex = 0; break;
-            case "red": document.getElementById("gcolor").selectedIndex = 1; break;
-            case "orange": document.getElementById("gcolor").selectedIndex = 2; break;
-            case "yellow": document.getElementById("gcolor").selectedIndex = 3; break;
-            case "green": document.getElementById("gcolor").selectedIndex = 4; break;
-            case "blue": document.getElementById("gcolor").selectedIndex = 5; break;
-            case "purple": document.getElementById("gcolor").selectedIndex = 6; break;
-        }
-        document.getElementById("strokewidth").selectedIndex = sa[8] - 1;
-        switch (sa[9]) {
-            case "2": document.getElementById("strokedash").selectedIndex = 1; break;
-            case "5": document.getElementById("strokedash").selectedIndex = 2; break;
-            case "5 2": document.getElementById("strokedash").selectedIndex = 3; break;
-            case "7 3 2 3": document.getElementById("strokedash").selectedIndex = 4; break;
-            default: document.getElementById("strokedash").selectedIndex = 0;
-        }
         */
     },
             
@@ -313,7 +351,7 @@ var AsciisvgDialog = {
             parts = command.split('=');
             cmd = parts[0].trim();
             value = parts[1];
-            if (value) value.trim();
+            if (value) value = value.trim();
 
             // axes command
             if (cmd.indexOf('axes') != -1) {
@@ -371,8 +409,10 @@ var AsciisvgDialog = {
                 option.text = eqnlabel;
             }
 
-            // var eqntype
-            else if (cmd.indexOf('var eqntype') != -1) {
+            // var eqntype, eqn1, eqn2
+            else if (cmd.indexOf('var eqntype') != -1 ||
+                     cmd.indexOf('var eqn1') != -1 ||
+                     cmd.indexOf('var eqn2') != -1) {
                 option = graphs.options[graphs.options.length-1];
                 option.value += command + "; ";
             }
