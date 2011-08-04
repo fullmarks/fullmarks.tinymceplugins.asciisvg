@@ -310,22 +310,15 @@ var AsciisvgDialog = {
                 }
             }
             else if (cmd.indexOf("plot") != -1) {
-                var plotargs = cmd.replace('"', '', 'g');
-                plotargs = plotargs.replace(')', '', 'g');
-                plotargs = plotargs.split(',');
-                var arrowstart = plotargs.slice(-1).slice(0,1);
-                var arrowend = plotargs.slice(-1).slice(-2,-1);
-                console.log(arrowstart);
-                console.log(arrowend);
                 var gstart = document.getElementById("gstart");
                 for (var i=0; i < gstart.options.length; i++) {
-                    if (gstart.options[i].value == arrowstart) {
+                    if (cmd.indexOf(gstart.options[i].value) != -1) {
                         gstart.selectedIndex = i;
                     }
                 }
                 var gend = document.getElementById("gend");
                 for (var i=0; i < gend.options.length; i++) {
-                    if (gend.options[i].value == arrowend) {
+                    if (cmd.indexOf(gend.options[i].value) != -1) {
                         gend.selectedIndex = i;
                     }
                 }
