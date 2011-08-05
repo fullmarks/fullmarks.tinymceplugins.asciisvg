@@ -128,7 +128,7 @@ var AsciisvgDialog = {
         commands += ' var eqn1="' + eq1 + '";';
         commands += ' var eqn2="' + eq2 + '";';
 
-        if (index) {
+        if (index != null) {
             var option = graphs.options[index];
             option.value = commands;
             option.text = eqnlabel;
@@ -330,12 +330,17 @@ var AsciisvgDialog = {
                         gend.selectedIndex = i;
                     }
                 }
+                var plotargs = cmd.split(',');
+                xstart = plotargs.slice(1,2);
+                xend = plotargs.slice(2,3);
+                if (parseInt(xstart)) {
+                    document.getElementById("xstart").value = xstart;
+                }
+                if (parseInt(xend)) {
+                    document.getElementById("xend").value = xend;
+                }
             }
         }
-        /*
-        document.getElementById("xstart").value = sa[5];
-        document.getElementById("xend").value = sa[6];
-        */
     },
             
     initscript : function(text) {
