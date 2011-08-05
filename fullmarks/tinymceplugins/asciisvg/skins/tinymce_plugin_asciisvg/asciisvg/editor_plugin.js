@@ -35,7 +35,7 @@
                 picture = node.getElementsByClassName('ASCIISvgPicture')[0];
                 initialized = false;
 
-                // unescape comments
+                // translate arrow markers to something ASCIIMathML expects
                 val = val.replace('^-', '<-', 'g');
                 val = val.replace('-^', '->', 'g');
                 translateandeval(val);
@@ -53,7 +53,7 @@
                     script = svgscript.innerHTML;
                     // strip away comment tags
                     script = script.slice(11, -5);
-                    // unescape comments
+                    // translate arrow markers to something ASCIIMathML expects
                     script = script.replace('^-', '<-', 'g');
                     script = script.replace('-^', '->', 'g');
 					isnew = false;
@@ -101,7 +101,7 @@
                     script = element.innerHTML;
                     // strip away comment tags
                     script = script.slice(11, -5);
-                    // unescape comments
+                    // translate arrow markers to something ASCIIMathML expects
                     script = script.replace('^-', '<-', 'g');
                     script = script.replace('-^', '->', 'g');
                     picture = element.nextSibling;
