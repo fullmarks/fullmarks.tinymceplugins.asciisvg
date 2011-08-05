@@ -23,7 +23,7 @@ var AsciisvgDialog = {
         updatePicture('previewsvg');
             
         this.initscript(this.script);
-        
+        this.loadeqn();
     },
 
     insert : function() {
