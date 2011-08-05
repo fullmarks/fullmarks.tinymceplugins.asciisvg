@@ -68,12 +68,11 @@ var AsciisvgDialog = {
         tinyMCEPopup.close();
     },
     
-    addgraph : function() {
+    addgraph : function(index) {
         
         var commands = "";
         var eqnlabel = "";
         var graphs = document.getElementById("graphs");
-        var newopt = document.createElement('option');
     
         var type = document.getElementById("eqntype").value;
         var eq1 = document.getElementById("equation").value;
@@ -129,21 +128,24 @@ var AsciisvgDialog = {
         commands += ' var eqn1="' + eq1 + '";';
         commands += ' var eqn2="' + eq2 + '";';
 
-        newopt.value = commands;
-        newopt.text = eqnlabel;
-        graphs.options[graphs.options.length] = newopt;
-        graphs.selectedIndex = graphs.options.length - 1;
+        if (index) {
+            var option = graphs.options[index];
+            option.value = commands;
+            option.text = eqnlabel;
+        } else {
+            var newopt = document.createElement('option');
+            newopt.value = commands;
+            newopt.text = eqnlabel;
+            graphs.options[graphs.options.length] = newopt;
+            graphs.selectedIndex = graphs.options.length - 1;
+        }
         this.graphit();
         document.getElementById("equation").focus();
         
     },
     
     replacegraph : function() {
-        var graphs = document.getElementById("graphs");
-        if (graphs.selectedIndex >= 0) {
-            graphs.options[graphs.selectedIndex] = null;  //standards compliant
-        }
-        this.addgraph();
+        this.addgraph(document.getElementById('graphs').selectedIndex);
     },
     
     removegraph : function() {
