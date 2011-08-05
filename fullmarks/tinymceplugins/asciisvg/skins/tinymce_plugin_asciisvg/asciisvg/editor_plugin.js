@@ -34,6 +34,10 @@
                 node = ed.selection.getNode();
                 picture = node.getElementsByClassName('ASCIISvgPicture')[0];
                 initialized = false;
+
+                // unescape comments
+                val = val.replace('^-', '<-', 'g');
+                val = val.replace('-^', '->', 'g');
                 translateandeval(val);
 
             });
@@ -49,6 +53,9 @@
                     script = svgscript.innerHTML;
                     // strip away comment tags
                     script = script.slice(11, -5);
+                    // unescape comments
+                    script = script.replace('^-', '<-', 'g');
+                    script = script.replace('-^', '->', 'g');
 					isnew = false;
 					elwidth = parseInt(ed.dom.getStyle(svggraph,"width"));
 					elheight = parseInt(ed.dom.getStyle(svggraph,"height"));
@@ -94,6 +101,9 @@
                     script = element.innerHTML;
                     // strip away comment tags
                     script = script.slice(11, -5);
+                    // unescape comments
+                    script = script.replace('^-', '<-', 'g');
+                    script = script.replace('-^', '->', 'g');
                     picture = element.nextSibling;
                     initialized = false;
                     translateandeval(script);

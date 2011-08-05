@@ -28,6 +28,12 @@ var AsciisvgDialog = {
 
     insert : function() {
         ed = tinyMCEPopup.editor;
+        // translate comments characters since we embed our script as a
+        // comment
+        var transcript = "";
+        transcript = this.script.replace('<-', '^-', 'g');
+        transcript = this.script.replace('->', '-^', 'g');
+
         // Insert the contents from the input into the document
         if (this.isnew) {
             if (this.alignm == "left" || this.alignm == "right") {
@@ -35,13 +41,13 @@ var AsciisvgDialog = {
             } else {
                 aligntxt = "vertical-align: "+this.alignm+"; float: none;";
             }
-            tinyMCEPopup.editor.execCommand('mceInsertASCIISvg', this.script);
+            tinyMCEPopup.editor.execCommand('mceInsertASCIISvg', transcript);
         }
         else {
             el = ed.selection.getNode();
             svgcontainer = ed.dom.getParent(el, 'div.ASCIISvg');
             svgscript = svgcontainer.childNodes[0];
-            svgscript.innerHTML = '<![CDATA[' + this.script +']]>'
+            svgscript.innerHTML = '<![CDATA[' + transcript +']]>'
             picture = svgcontainer.childNodes[1];
             initialized = false;
             translateandeval(this.script);
@@ -78,7 +84,7 @@ var AsciisvgDialog = {
         var gend = document.getElementById("gend");
         var m_gstart = gstart.options[gstart.selectedIndex].value;
         var m_gend = gend.options[gend.selectedIndex].value;
-        var endpts = m_gstart + m_gend;
+        var endpts = m_gstart + " " + m_gend;
 
         var m_color = document.getElementById("gcolor").value;
         var m_strokewidth = document.getElementById("strokewidth").value;
