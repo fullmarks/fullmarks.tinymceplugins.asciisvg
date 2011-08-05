@@ -48,13 +48,13 @@ Line: <Select id="strokedash">
 
 Start with: <Select id="gstart">
 	<option value="">Nothing</option>
-	<option value="&lt;-">Arrow</option>
+	<option value="<-">Arrow</option>
 	<option value="o-">Open Dot</option>
 	<option value="*-">Dot</option>
 </select>
 End with: <Select id="gend">
 	<option value="">Nothing</option>
-	<option value="-&gt;">Arrow</option>
+	<option value="->">Arrow</option>
 	<option value="-o">Open Dot</option>
 	<option value="-*">Dot</option>
 </select> 
