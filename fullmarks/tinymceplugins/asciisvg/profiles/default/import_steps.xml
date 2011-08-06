@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="fullmarks-tinymceplugins-asciisvg-various" version="20110806-01"
+                handler="fullmarks.tinymceplugins.asciisvg.setuphandlers.setup"
+                title="FullMarks TinyMCE ASCIISvg Plugin setup">
+    <dependency step="componentregistry"/>
+        FullMarks TinyMCE ASCIISvg Plugin installation step.
+    </import-step>
+</import-steps>
