@@ -32,14 +32,8 @@
 
                 ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
                 node = ed.selection.getNode();
-                picture = node.getElementsByClassName('ASCIISvgPicture')[0];
-                initialized = false;
-
-                // translate arrow markers to something ASCIIMathML expects
-                val = val.replace('^-', '<-', 'g');
-                val = val.replace('-^', '->', 'g');
-                translateandeval(val);
-
+                svgscript = node.getElementsByClassName('ASCIISvgScript')[0];
+                drawgraph(svgscript);
             });
 
 
@@ -98,15 +92,7 @@
                 selected = ed.dom.select('span.ASCIISvgScript');
                 for (var i=0; i < selected.length; i++) {
                     element = selected[i];
-                    script = element.innerHTML;
-                    // strip away comment tags
-                    script = script.slice(11, -5);
-                    // translate arrow markers to something ASCIIMathML expects
-                    script = script.replace('^-', '<-', 'g');
-                    script = script.replace('-^', '->', 'g');
-                    picture = element.nextSibling;
-                    initialized = false;
-                    translateandeval(script);
+                    drawgraph(element);
                 };
             });
 
