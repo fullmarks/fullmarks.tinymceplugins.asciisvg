@@ -7,6 +7,11 @@ def addCustomTags(site):
     transform = getattr(pt, safe_html_id)
     nasty = dict(transform.get_parameter_value('nasty_tags'))
     valid = dict(transform.get_parameter_value('valid_tags'))
+
+    # we only add the svg tag as valid tag to prevent the transform from
+    # stripping all svg tags from the DOM and leaving only text behind.
+    # we regenerate the full svg image from scripts embedded in CDATA in
+    # the page so we don't really need to store the full svg image
     valid['svg'] = '1'
 
     transform.set_parameters(nasty_tags_key=nasty.keys(),
