@@ -1,10 +1,10 @@
 /**
- * ASCIIsvg plugin for TinyMCE.
- *   port of ASCIIsvg plugin for HTMLArea written by 
- *   David Lippman and Peter Jipsen
+ * ASCIIsvg plugin for TinyMCE
+ *   uses Peter Jipsen ASCIIMathML.js library
+ *   derived from David Lippman's TinyMCE Plugin
  *
- * @author David Lippman
- * @copyright Copyright © 2008 David Lippman.
+ * @author Roché Compaan
+ * @copyright Copyright © 2011 Roché Compaan.
  *
  * Plugin format based on code that is:
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
@@ -15,18 +15,9 @@
 	tinymce.PluginManager.requireLangPack('asciisvg');
 
 	tinymce.create('tinymce.plugins.AsciisvgPlugin', {
-		/**
-		 * Initializes the plugin, this will be executed after the plugin has been created.
-		 * This call is done before the editor instance has finished it's initialization so use the onInit event
-		 * of the editor instance to intercept that event.
-		 *
-		 * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
-		 * @param {string} url Absolute URL to where the plugin is located.
-		 */
+
 		init : function(ed, url) {
 			var t= this;
-
-			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceAsciisvg');
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
@@ -126,16 +117,16 @@
 				cm.setActive('asciisvg', svgcontainer != null);
                 if (svgcontainer != null && svgcontainer.getElementsByClassName('mceItemVisualAid')) {
                     svg = svgcontainer.childNodes[1];
-                    // not sure why ed.dom.addClass does not work
-                    // ed.dom.addClass(svg, 'mceItemVisualAid');
                     if (svg != null) {
+                        // not sure why ed.dom.addClass does not work
+                        // ed.dom.addClass(svg, 'mceItemVisualAid');
                         svg.setAttribute('class', 'mceItemVisualAid');
                     }
                 };
 			});
 
             ed.onKeyPress.add(function(ed, e) {
-                // delete or backspace key
+                // delete graph when delete or backspace key is pressed
                 if (e.keyCode == 46 || e.keyCode == 8) {
                     node = ed.selection.getNode();
                     var svgcontainer = ed.dom.getParent(node, 'div.ASCIISvg');
@@ -143,7 +134,6 @@
                         svgcontainer.parentNode.removeChild(svgcontainer);
                     }
                 }
-
 
                 // place the caret after the svg node when pressing
                 // enter, down or right arrow
@@ -174,18 +164,12 @@
 
 		},
 
-		/**
-		 * Returns information about the plugin as a name/value array.
-		 * The current keys are longname, author, authorurl, infourl and version.
-		 *
-		 * @return {Object} Name/value array containing information about the plugin.
-		 */
 		getInfo : function() {
 			return {
 				longname : 'ASCIISvg Plugin',
 				author : 'Roché Compaan',
-				authorurl : '',
-				infourl : '',
+				authorurl : 'http://github.com/rochecompaan',
+				infourl : 'https://github.com/fullmarks/fullmarks.tinymceplugins.asciisvg',
 				version : "1.0"
 			};
 		}, 
