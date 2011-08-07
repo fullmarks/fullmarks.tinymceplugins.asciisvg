@@ -117,8 +117,8 @@
 			});
 
             ed.onKeyPress.add(function(ed, e) {
-                // Delete key
-                if (e.keyCode == 46) {
+                // delete or backspace key
+                if (e.keyCode == 46 || e.keyCode == 8) {
                     node = ed.selection.getNode();
                     var svgcontainer = ed.dom.getParent(node, 'div.ASCIISvg');
                     if (svgcontainer != null) {
