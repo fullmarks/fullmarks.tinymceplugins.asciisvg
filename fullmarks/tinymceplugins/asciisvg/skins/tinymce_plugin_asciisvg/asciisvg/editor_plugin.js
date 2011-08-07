@@ -30,7 +30,7 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div><br/>')
+                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
                 node = ed.selection.getNode();
                 svgscript = node.getElementsByClassName('ASCIISvgScript')[0];
                 drawgraph(svgscript);
@@ -87,13 +87,31 @@
 				image : url + '/img/ed_asciisvg.gif'
 			});
 
-            // Convert script to svg onInit
+            // Convert script to svg onInit and fix caret position
             ed.onInit.add(function(ed) {
-                selected = ed.dom.select('span.ASCIISvgScript');
-                for (var i=0; i < selected.length; i++) {
-                    element = selected[i];
-                    drawgraph(element);
+                function drawgraphs() {
+                    selected = ed.dom.select('span.ASCIISvgScript');
+                    for (var i=0; i < selected.length; i++) {
+                        element = selected[i];
+                        drawgraph(element);
+                    };
+                }
+                drawgraphs();
+                ed.onSetContent.add(drawgraphs);
+
+                if (!tinymce.isIE) {
+					function fixCaretPos() {
+						var last = ed.getBody().lastChild;
+						if (last && last.nodeName == 'P' &&
+                                    last.childNodes.length == 0)
+                            last.innerHTML = '<br mce_bogus="1" />'
+					};
+                    fixCaretPos();
                 };
+                ed.onKeyUp.add(fixCaretPos);
+                ed.onSetContent.add(fixCaretPos);
+                ed.onVisualAid.add(fixCaretPos);
+
             });
 
             // Add a node change handler, selects the button in the UI
@@ -129,7 +147,7 @@
 
                 // place the caret after the svg node when pressing
                 // enter, down or right arrow
-                if (e.keyCode == 13 || 
+                if (e.keyCode == 13 || e.keyCode == 0 ||
                     e.keyCode == 37 || e.keyCode == 38 ||
                     e.keyCode == 39 || e.keyCode == 40) {
                     var rng, svg, dom = ed.dom;
@@ -144,7 +162,6 @@
                             rng.setStartBefore(svg);
                             rng.setEndBefore(svg);
                         } else {
-                            console.log(svg);
                             rng.setStartAfter(svg);
                             rng.setEndAfter(svg);
                         }
