@@ -116,6 +116,19 @@
                 };
 			});
 
+            ed.onKeyPress.add(function(ed, e) {
+                // Delete key
+                if (e.keyCode == 46) {
+                    node = ed.selection.getNode();
+                    var svgcontainer = ed.dom.getParent(node, 'div.ASCIISvg');
+                    if (svgcontainer != null) {
+                        svgcontainer.parentNode.removeChild(svgcontainer);
+                    }
+                }
+                console.debug('Key press event: ' + e.keyCode);
+            });
+
+
 		},
 
 		/**
