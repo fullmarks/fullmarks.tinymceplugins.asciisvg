@@ -156,7 +156,6 @@
                             rng.setEndAfter(svg);
                         }
                         ed.selection.setRng(rng);
-                        // e.preventDefault();
                     }
                 }
             });
