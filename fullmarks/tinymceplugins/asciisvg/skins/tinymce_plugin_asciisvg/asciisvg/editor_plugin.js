@@ -30,7 +30,7 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
+                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div><br/>')
                 node = ed.selection.getNode();
                 svgscript = node.getElementsByClassName('ASCIISvgScript')[0];
                 drawgraph(svgscript);
@@ -121,11 +121,37 @@
                 if (e.keyCode == 46 || e.keyCode == 8) {
                     node = ed.selection.getNode();
                     var svgcontainer = ed.dom.getParent(node, 'div.ASCIISvg');
-                    if (svgcontainer != null) {
+                    if (svgcontainer) {
                         svgcontainer.parentNode.removeChild(svgcontainer);
                     }
                 }
-                console.debug('Key press event: ' + e.keyCode);
+
+
+                // place the caret after the svg node when pressing
+                // enter, down or right arrow
+                if (e.keyCode == 13 || 
+                    e.keyCode == 37 || e.keyCode == 38 ||
+                    e.keyCode == 39 || e.keyCode == 40) {
+                    var rng, svg, dom = ed.dom;
+
+                    rng = ed.selection.getRng();
+                    svg = dom.getParent(rng.startContainer, 'div.ASCIISvg');
+
+                    if (svg) {
+                        rng = dom.createRng();
+
+                        if (e.keyCode == 37 || e.keyCode == 38) {
+                            rng.setStartBefore(svg);
+                            rng.setEndBefore(svg);
+                        } else {
+                            console.log(svg);
+                            rng.setStartAfter(svg);
+                            rng.setEndAfter(svg);
+                        }
+                        ed.selection.setRng(rng);
+                        // e.preventDefault();
+                    }
+                }
             });
 
 
