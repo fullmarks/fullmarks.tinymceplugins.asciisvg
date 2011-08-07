@@ -263,6 +263,7 @@ var AsciisvgDialog = {
     
     loadeqn : function() {
         var graphs = document.getElementById("graphs"); 
+        if (graphs.options.length == 0) return;
         var script = graphs.options[graphs.selectedIndex].value;
         var commands = script.split(';');
         
