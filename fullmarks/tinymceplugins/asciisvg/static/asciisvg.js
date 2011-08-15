@@ -1,5 +1,5 @@
 jq(function() {
-    $('span.ASCIISvgScript').each(function(index, element) {
+    jq('span.ASCIISvgScript').each(function(index, element) {
         drawgraph(element);
     });
 });
