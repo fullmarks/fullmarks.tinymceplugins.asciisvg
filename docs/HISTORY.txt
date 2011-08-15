@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1
+---
+
+- use jq instead of $ to invoke jquery for Plone 3 compatibility
+
 1.0
 ---
 
