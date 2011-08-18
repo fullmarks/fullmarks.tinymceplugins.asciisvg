@@ -21,17 +21,26 @@
 
             ed.addCommand('mceInsertASCIISvg', function(val) {
 
-                ed.selection.setContent('<div class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></div>')
-                node = ed.selection.getNode();
-                svgscript = node.getElementsByClassName('ASCIISvgScript')[0];
+                ed.selection.setContent('<span class="ASCIISvg"><span class="ASCIISvgScript"><![CDATA[' + val +']]></span><span class="ASCIISvgPicture" style="width:300px; height: 200px;"/></span>')
+                var node = ed.selection.getNode();
+                var svgscript = node.getElementsByClassName('ASCIISvgScript')[0];
                 drawgraph(svgscript);
+                // Embed generated SVG as CDATA
+                var svgnode = node.getElementsByTagName('svg')[0];
+                var svg = ed.dom.getOuterHTML(svgnode);
+                svg = svg.replace(/>/g,"&gt;");
+                svg = svg.replace(/</g,"&lt;");
+                var cdata = '<![CDATA[' + svg + ']]>';
+                var spansvg = ed.dom.create('span', {'class' : 'SVG'}, cdata);
+                node.appendChild(spansvg)
+
             });
 
 
 			ed.addCommand('mceAsciisvg', function() {
 				el = ed.selection.getNode();
 
-				var svgcontainer = ed.dom.getParent(el, 'div.ASCIISvg');
+				var svgcontainer = ed.dom.getParent(el, 'span.ASCIISvg');
 				if (svgcontainer != null) {
                     svgscript = svgcontainer.childNodes[0];
                     svggraph = svgcontainer.childNodes[1];
@@ -113,7 +122,7 @@
                     svg = selected[i];
                     svg.removeAttribute('class');
                 };
-				var svgcontainer = ed.dom.getParent(n, 'div.ASCIISvg');
+				var svgcontainer = ed.dom.getParent(n, 'span.ASCIISvg');
 				cm.setActive('asciisvg', svgcontainer != null);
                 if (svgcontainer != null && svgcontainer.getElementsByClassName('mceItemVisualAid')) {
                     svg = svgcontainer.childNodes[1];
@@ -129,7 +138,7 @@
                 // delete graph when delete or backspace key is pressed
                 if (e.keyCode == 46 || e.keyCode == 8) {
                     node = ed.selection.getNode();
-                    var svgcontainer = ed.dom.getParent(node, 'div.ASCIISvg');
+                    var svgcontainer = ed.dom.getParent(node, 'span.ASCIISvg');
                     if (svgcontainer) {
                         svgcontainer.parentNode.removeChild(svgcontainer);
                     }
@@ -143,7 +152,7 @@
                     var rng, svg, dom = ed.dom;
 
                     rng = ed.selection.getRng();
-                    svg = dom.getParent(rng.startContainer, 'div.ASCIISvg');
+                    svg = dom.getParent(rng.startContainer, 'span.ASCIISvg');
 
                     if (svg) {
                         rng = dom.createRng();

@@ -45,12 +45,21 @@ var AsciisvgDialog = {
         }
         else {
             el = ed.selection.getNode();
-            svgcontainer = ed.dom.getParent(el, 'div.ASCIISvg');
+            svgcontainer = ed.dom.getParent(el, 'span.ASCIISvg');
             svgscript = svgcontainer.childNodes[0];
             svgscript.innerHTML = '<![CDATA[' + transcript +']]>'
             picture = svgcontainer.childNodes[1];
             initialized = false;
             translateandeval(this.script);
+
+            // Store generated SVG in CDATA
+            var svgnode = svgcontainer.getElementsByTagName('svg')[0];
+            var svg = ed.dom.getOuterHTML(svgnode);
+            svg = svg.replace(/>/g,"&gt;");
+            svg = svg.replace(/</g,"&lt;");
+            var cdata = '<![CDATA[' + svg + ']]>';
+            var spansvg = svgcontainer.getElementsByClassName('SVG')[0];
+            spansvg.innerHTML = cdata;
 
             ed.dom.setAttrib(picture,"script",this.script);
             ed.dom.setAttrib(picture,"width",this.width);
