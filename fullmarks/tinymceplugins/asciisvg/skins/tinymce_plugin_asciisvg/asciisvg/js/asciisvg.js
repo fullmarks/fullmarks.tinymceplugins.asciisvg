@@ -1,3 +1,5 @@
+showcoordinates = false;
+
 function drawgraph(svgscript) {
     script = svgscript.innerHTML;
     // strip away comment tags
