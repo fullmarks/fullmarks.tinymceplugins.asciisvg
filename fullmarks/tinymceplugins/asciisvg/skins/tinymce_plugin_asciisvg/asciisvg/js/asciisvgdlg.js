@@ -1,5 +1,23 @@
 tinyMCEPopup.requireLangPack();
 
+// copied from translateandeval in ASCIIMathML.js to validate the
+// expression before we add it the list of graphs. Any exception raised
+// is not caught so calling code knows if the expression is invalid
+function validateexpr(src) { //modify user input to JavaScript syntax
+  // replace plot(f(x),...) with plot("f(x)",...)  
+  src = src.replace(/plot\(\x20*([^\"f\[][^\n\r;]+?)\,/g,"plot\(\"$1\",");
+  src = src.replace(/plot\(\x20*([^\"f\[][^\n\r;]+)\)/g,"plot(\"$1\")");
+
+  // replace (expr,expr) by [expr,expr] where expr has no (,) in it
+  src = src.replace(/([=[(,]\x20*)\(([-a-z0-9./+*]+?),([-a-z0-9./+*]+?)\)/g,"$1[$2,$3]");
+//alert(src)
+  // insert * between digit and letter e.g. 2x --> 2*x
+  src = src.replace(/([0-9])([a-df-zA-Z]|e^)/g,"$1*$2");
+  src = src.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
+
+  with (Math) eval(src);
+}
+
 var AsciisvgDialog = {
     width: 300,
     height: 200,
@@ -139,6 +157,8 @@ var AsciisvgDialog = {
 
         if (index != null) {
             var option = graphs.options[index];
+            currentvalue = option.value;
+            currenttext = option.text;
             option.value = commands;
             option.text = eqnlabel;
         } else {
@@ -148,7 +168,26 @@ var AsciisvgDialog = {
             graphs.options[graphs.options.length] = newopt;
             graphs.selectedIndex = graphs.options.length - 1;
         }
-        this.graphit();
+
+        try {
+            this.graphit();
+        } catch(err) {
+            if (err!="wait") {
+                if (typeof err=="object") 
+                    errstr = err.name+" "+err.message;
+                else errstr = err;
+                alert(eqnlabel +  " is not a valid function. Please correct it before trying to add or replace a graph.")
+                // restore current option 
+                if (index != null) {
+                    option.value = currentvalue;
+                    option.text = currenttext;
+                    this.graphit();
+                } else {
+                    this.removegraph()
+                }
+            }
+        }
+
         document.getElementById("equation").focus();
         
     },
@@ -215,6 +254,7 @@ var AsciisvgDialog = {
         
         document.getElementById("previewsvg").setAttribute("script", this.script);
         document.getElementById("previewsvginput").value = this.script;
+        validateexpr(this.script);
         updatePicture('previewsvg');
     },
     
