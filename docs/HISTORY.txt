@@ -7,6 +7,13 @@ Changelog
 - Prevent users from adding an invalid function to the graph. Show an
   error and ask them to re-enter the function.
 
+- use single quotes when adding equations to dropdown list since double
+  quotes don't work on Chrome.
+    
+- use regexp syntax for string replacement since the global match flag
+  (eg s.replace(substr, newsubstr, 'g') is not supported by Chrome.
+
+
 1.2
 ---
 
