@@ -49,8 +49,8 @@ var AsciisvgDialog = {
         // translate comments characters since we embed our script as a
         // comment
         var transcript = "";
-        transcript = this.script.replace('<-', '^-', 'g');
-        transcript = this.script.replace('->', '-^', 'g');
+        transcript = this.script.replace(/<-/g, '^-');
+        transcript = transcript.replace(/->/g, '-^');
 
         // Insert the contents from the input into the document
         if (this.isnew) {
@@ -133,12 +133,13 @@ var AsciisvgDialog = {
                 eqn = '"' + eq1 + '"';
                 eqnlabel = "y=" + eq1;
             } else if (type == "polar") {
-                eqn = '["cos(t)*(' + eq1 + ')","sin(t)*(' + eq1 + ')"]';
+                eqn = '[\'cos(t)*(' + eq1 + ')\',\'sin(t)*(' + eq1 + ')\']';
                 eqnlabel = "r=" + eq1;
             } else if (type == "param") {
-                eqn = '["' + eq1 + '","'+ eq2 + '"]';
+                eqn = '[\'' + eq1 + '\',\''+ eq2 + '\']';
                 eqnlabel = "[x,y]=" + eqn;
-                eqnlabel = eqnlabel.replace('"','','g');
+                eqnlabel = eqnlabel.replace(/\'/g,'');
+
             }
 
             if (typeof eval(x_start) == "number" && typeof eval(x_end) == "number") {
@@ -341,7 +342,7 @@ var AsciisvgDialog = {
             var value = parts[1];
             if (value) {
                 value = value.trim();
-                value = value.replace('"', '', 'g');
+                value = value.replace(/\'/g,'');
             }
 
             if (cmd == "stroke") {
